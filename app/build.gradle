@@ -4,25 +4,73 @@ plugins {
 }
 
 android {
-    namespace 'com.example.myfirstandroidjenkinapplication_cicd'
+    namespace 'com.rudrats.cicd'
     compileSdk 32
 
+    //Default Configuration
     defaultConfig {
-        applicationId "com.example.myfirstandroidjenkinapplication_cicd"
+        //applicationId "com.example.myfirstandroidjenkinapplication_cicd"
+        manifestPlaceholders = [hostName:"com.rudrats.cicd"]
+        manifestPlaceholders = [appName: "RudraTS"]
         minSdk 21
         targetSdk 32
         versionCode 1
         versionName "1.0"
-
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
 
-    buildTypes {
+    //Default Sign in Configuration
+    signingConfigs {
         release {
-            minifyEnabled false
-            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            storeFile file("keystorefile.jks")
+            storePassword "rudrats"
+            keyAlias "rudrats"
+            keyPassword "rudrats"
         }
     }
+
+
+    //Build Configuration
+    buildTypes {
+
+        //Development & working
+        debug {
+            manifestPlaceholders = [appName: "RudraTS - Debug"]
+            applicationIdSuffix ".debug"
+            debuggable true
+        }
+
+
+        //For testing  & Staging
+        /**
+         * The `initWith` property allows you to copy configurations from other build types,
+         * then configure only the settings you want to change. This one copies the debug build
+         * type, and then changes the manifest placeholder and application ID.
+         */
+        staging {
+            manifestPlaceholders = [appName: "RudraTS - Staging"]
+            initWith debug
+            //manifestPlaceholders = [hostName:"internal.example.com"]
+            applicationIdSuffix ".staging"
+        }
+
+
+        //For Production & release
+        release {
+            manifestPlaceholders = [appName: "RudraTS - Release"]
+            applicationIdSuffix ".release"
+            signingConfig signingConfigs.release
+            minifyEnabled false
+            debuggable true
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+
+    }
+
+
+
+
+
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8

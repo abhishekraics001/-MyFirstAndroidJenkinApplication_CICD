@@ -1,4 +1,4 @@
-package com.example.myfirstandroidjenkinapplication_cicd
+package com.rudrats.cicd
 
 import org.junit.Test
 
