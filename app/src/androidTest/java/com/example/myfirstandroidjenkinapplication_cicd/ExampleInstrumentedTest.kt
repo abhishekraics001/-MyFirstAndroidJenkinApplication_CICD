@@ -15,10 +15,23 @@ import org.junit.Assert.*
  */
 @RunWith(AndroidJUnit4::class)
 class ExampleInstrumentedTest {
+
     @Test
     fun useAppContext() {
         // Context of the app under test.
         val appContext = InstrumentationRegistry.getInstrumentation().targetContext
         assertEquals("com.example.myfirstandroidjenkinapplication_cicd", appContext.packageName)
+    }
+
+    @Test
+    fun AppIsWorkingFile(){
+        val myTestDynamicVal = "Abhishek";
+        assertEquals("Abhishek", myTestDynamicVal)
+    }
+
+    @Test
+    fun AppIsWorkingFileOrNot(){
+        val myTestDynamicVal = "Abhishek Rai";
+        assertEquals("Abhishek", myTestDynamicVal)
     }
 }
